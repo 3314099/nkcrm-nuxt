@@ -1,74 +1,110 @@
 <template>
-  <div>
-    <v-snackbar
-      v-model="getSnackBar.snackbar"
-      absolute
-      top
-      color="deep-purple accent-4"
-      :timeout="getSnackBar.timeout"
-    >
-      {{ getSnackBar.text }}
+  <v-snackbar
+    v-model="snackbar"
+    :bottom="y === 'bottom'"
+    :color="color"
+    :left="x === 'left'"
+    :multi-line="mode === 'multi-line'"
+    :right="x === 'right'"
+    :timeout="timeout"
+    :top="y === 'top'"
+    :vertical="mode === 'vertical'"
+  >
+    {{ text }}
 
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          icon
-          text
-          v-bind="attrs"
-          @click="closeSnackBar()"
-        >
-          <v-icon>mdi-close-circle-outline</v-icon>
-        </v-btn>
-      </template>
-    </v-snackbar>
-  </div>
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        dark
+        text
+        v-bind="attrs"
+        @click="snackbar = false"
+      >
+        <v-icon>mdi-close-circle-outline</v-icon>
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
 export default {
   name: 'SnackBar',
+  data () {
+    return {
+      color: '',
+      mode: '',
+      snackbar: false,
+      text: 'Hello, I\'m a snackbar',
+      timeout: 6000,
+      x: null,
+      y: 'top'
+    }
+  },
   computed: {
-    getSnackBar: {
-      get () {
-        const snackBar = this.$store.getters['snackBar/snackBar']
-        return this.buildSnackBar(snackBar)
+    newSnackBar () {
+      return this.snackbar
+    },
+    snackBar () {
+      return this.$store.getters['snackBar/snackBar']
+    },
+    error () {
+      return this.$store.getters['index/error']
+    }
+  },
+  watch: {
+    snackBar (value) {
+      if (value) {
+        this.buildSnackBar(value)
+      }
+    },
+    error (value) {
+      if (value) {
+        this.buildError(value)
       }
     }
   },
+  mounted () {
+    const { message } = this.$route.query // сообщение через адресную строку
+    if (message) {
+      this.buildMessage(message)
+    }
+  },
   methods: {
-    closeSnackBar () {
-      this.$store.dispatch('snackBar/changeSnackBar', '')
-    },
     buildSnackBar (snackBar) {
-      const newSnackBar = {}
       switch (snackBar) {
         case 'login':
-          newSnackBar.color = 'success'
-          newSnackBar.mode = '' // 'vertical' => mobile
-          newSnackBar.text = 'Необходимо войти в систему' // текст сообщения
-          newSnackBar.timeout = 6000 // 1000 = 1 сек.
-          newSnackBar.x = null // left/right/null
-          newSnackBar.y = 'top' // bottom/top
-          newSnackBar.snackbar = true // true/false
+          this.color = 'success'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Необходимо войти в систему' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
           break
-        case 'exit':
-          newSnackBar.color = 'success'
-          newSnackBar.mode = '' // 'vertical' => mobile
-          newSnackBar.text = 'Вы вышли из системы' // текст сообщения
-          newSnackBar.timeout = 6000 // 1000 = 1 сек.
-          newSnackBar.x = null // left/right/null
-          newSnackBar.y = 'top' // bottom/top
-          newSnackBar.snackbar = true // true/false
+        case 'logout':
+          this.color = 'success'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Вы вышли из системы' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
           break
         default: // '' или нет в списке
-          newSnackBar.color = 'success' // primary, success, info, warning, error, pink, indigo, teal, cyan, purple
-          newSnackBar.mode = '' // 'vertical' => mobile
-          newSnackBar.text = '' // текст сообщения
-          newSnackBar.timeout = 1 // 1000 = 1 сек.
-          newSnackBar.x = null // left/right
-          newSnackBar.y = 'top' // bottom/top
-          newSnackBar.snackbar = false // true/false
+          break
       }
-      return newSnackBar
+      this.$store.dispatch('snackBar/changeSnackBar', '')
+    },
+    buildError () {
+    },
+    buildMessage (message) {
+      this.color = 'primary'
+      this.mode = '' // 'vertical' => mobile
+      this.text = 'Получено сообщение' + message // текст сообщения
+      this.timeout = 6000 // 1000 = 1 сек.
+      this.x = null // left/right/null
+      this.y = 'top' // bottom/top
+      this.snackbar = true // true/false
+      this.$store.dispatch('snackBar/changeSnackBar', '')
     }
   }
 }

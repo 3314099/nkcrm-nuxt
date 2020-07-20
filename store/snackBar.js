@@ -10,15 +10,7 @@ export const mutations = {
 
 export const actions = {
   changeSnackBar ({ commit }, payload) {
-    if (payload) {
-      setTimeout(() => {
-        commit('changeSnackBar', '')
-      }, 4000)
-    }
     commit('changeSnackBar', payload)
-    setTimeout(() => {
-      commit('changeSnackBar', '')
-    }, 10000)
   }
 }
 

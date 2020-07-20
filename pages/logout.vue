@@ -12,7 +12,7 @@ export default {
   beforeCreate () {
     this.$store.dispatch('auth/logout')
     this.$router.push('/') // событие или сообщение - вы вышли из системы
-    this.$store.dispatch('snackBar/changeSnackBar', 'exit')
+    this.$store.dispatch('snackBar/changeSnackBar', 'logout')
   }
 }
 </script>
