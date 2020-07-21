@@ -33,6 +33,7 @@
     </v-card-text>
     <v-card-actions>
       <v-btn
+        text
         color="teal"
         to="/registration"
       >
@@ -40,6 +41,7 @@
       </v-btn>
       <v-spacer />
       <v-btn
+        text
         type="submit"
         color="primary"
         :loading="loading"
@@ -98,7 +100,7 @@ export default {
           password: this.password
         }
         await this.$store.dispatch('auth/login', formData)
-        this.$router.push('/main')
+        this.$router.push('/main?message=authed')
       } catch {
         this.loading = false
       }

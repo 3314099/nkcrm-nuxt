@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <div class="">
+      <SnackBar />
       <Navbar />
       <Drawer />
     </div>
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import SnackBar from '@/components/layoutsComponents/SnackBar'
 import Navbar from '@/components/layoutsComponents/user/Navbar'
 import Drawer from '@/components/layoutsComponents/user/Drawer'
 import LeftBar from '@/components/layoutsComponents/user/LeftBar'
@@ -37,6 +39,7 @@ import Navigation from '@/components/layoutsComponents/user/Navigation'
 export default {
   name: 'User',
   components: {
+    SnackBar,
     Navbar,
     Drawer,
     LeftBar,

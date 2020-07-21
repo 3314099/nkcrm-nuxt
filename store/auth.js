@@ -14,8 +14,8 @@ export const mutations = {
 export const actions = {
   async login ({ commit, dispatch }, formData) {
     try {
-      const token = await new Promise((resolve, reject) => {
-        setTimeout(() => reject(new Error('mock-token')), 500)
+      const token = await new Promise((resolve) => {
+        setTimeout(() => resolve('mock-token'), 500)
       })
       dispatch('setToken', token)
     } catch (e) {

@@ -19,6 +19,7 @@
 </template>
 <script>
 export default {
+  transition: 'bounce',
   layout: 'admin'
 }
 </script>

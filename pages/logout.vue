@@ -11,8 +11,7 @@ export default {
   middleware: [isAuthed],
   beforeCreate () {
     this.$store.dispatch('auth/logout')
-    this.$router.push('/') // событие или сообщение - вы вышли из системы
-    this.$store.dispatch('snackBar/changeSnackBar', 'logout')
+    this.$router.push('/?message=logout') // событие или сообщение - вы вышли из системы
   }
 }
 </script>

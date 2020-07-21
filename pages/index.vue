@@ -15,11 +15,11 @@
       <!-- menu item -->
       <v-toolbar-items>
         <v-btn
-          @click="snackBar('login')"
+          @click="snackBar('testButton')"
         >
-          SnackBar
+          testSnackBar
         </v-btn>
-        <v-btn to="/admin?message=aaa">
+        <v-btn to="/main?message=aaa">
           message
         </v-btn>
         <v-btn to="/admin">
@@ -370,6 +370,8 @@ export default {
         'Fifth'
       ]
     }
+  },
+  computed: {
   },
   methods: {
     subscribe () {

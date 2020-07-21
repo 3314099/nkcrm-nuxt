@@ -78,6 +78,13 @@
       >
         Main
       </v-btn>
+      <v-btn
+        text
+        class="ma-2"
+        @click="snackBar('testButton')"
+      >
+        testSnackBar
+      </v-btn>
 
       <v-spacer />
       <v-menu>
@@ -159,6 +166,9 @@ export default {
     }
   },
   methods: {
+    snackBar (val) {
+      this.$store.dispatch('snackBar/changeSnackBar', val)
+    },
     profile () {
 
     },

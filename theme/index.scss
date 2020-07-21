@@ -1,8 +1,8 @@
-.page-enter-active, .page-leave-active {
+.bounce-enter-active, .bounce-leave-active {
    transition: all 0.3s;
  }
 
-.page-enter, .page-leave-active {
+.bounce-enter, .bounce-leave-active {
   opacity: 0;
   transform: scale(0);
 }

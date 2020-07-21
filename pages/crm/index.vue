@@ -21,6 +21,7 @@
 import isAuthed from '@/middleware/isAuthed'
 
 export default {
+  transition: 'bounce',
   layout: 'user',
   middleware: [isAuthed]
 }

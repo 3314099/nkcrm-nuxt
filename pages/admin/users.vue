@@ -6,6 +6,7 @@
 <script>
 import registration from '~/components/auth/registration'
 export default {
+  transition: 'bounce',
   components: { registration },
   layout: 'admin'
 }

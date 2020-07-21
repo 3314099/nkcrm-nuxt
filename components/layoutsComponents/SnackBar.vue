@@ -40,14 +40,11 @@ export default {
     }
   },
   computed: {
-    newSnackBar () {
-      return this.snackbar
-    },
     snackBar () {
       return this.$store.getters['snackBar/snackBar']
     },
     error () {
-      return this.$store.getters['index/error']
+      return this.$store.getters.error
     }
   },
   watch: {
@@ -71,10 +68,28 @@ export default {
   methods: {
     buildSnackBar (snackBar) {
       switch (snackBar) {
-        case 'login':
+        case 'testButton':
           this.color = 'success'
           this.mode = '' // 'vertical' => mobile
-          this.text = 'Необходимо войти в систему' // текст сообщения
+          this.text = 'testButton' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
+          break
+        case 'isAuthed':
+          this.color = 'primary'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Вы успешно вошли в систему' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
+          break
+        case 'failLogin':
+          this.color = 'success'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Не удалось войти в систему' // текст сообщения
           this.timeout = 2000 // 1000 = 1 сек.
           this.x = null // left/right/null
           this.y = 'top' // bottom/top
@@ -94,16 +109,48 @@ export default {
       }
       this.$store.dispatch('snackBar/changeSnackBar', '')
     },
-    buildError () {
-    },
-    buildMessage (message) {
-      this.color = 'primary'
+    buildError (message) {
+      this.color = 'error'// ['success', 'info', 'error', 'cyan darken-2']
       this.mode = '' // 'vertical' => mobile
-      this.text = 'Получено сообщение' + message // текст сообщения
+      this.text = 'Серверная ошибка' + message // текст сообщения
       this.timeout = 6000 // 1000 = 1 сек.
       this.x = null // left/right/null
       this.y = 'top' // bottom/top
       this.snackbar = true // true/false
+      this.$store.dispatch('clearError')
+    },
+    buildMessage (message) {
+      switch (message) {
+        case 'logout':
+          this.color = 'success'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Вы успешно вышли из системы' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
+          break
+        case 'authed':
+          this.color = 'primary'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Вы успешно вошли в систему' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
+          break
+        case 'failLogin':
+          this.color = 'success'
+          this.mode = '' // 'vertical' => mobile
+          this.text = 'Не удалось войти в систему' // текст сообщения
+          this.timeout = 2000 // 1000 = 1 сек.
+          this.x = null // left/right/null
+          this.y = 'top' // bottom/top
+          this.snackbar = true // true/false
+          break
+        default: // '' или нет в списке
+          break
+      }
       this.$store.dispatch('snackBar/changeSnackBar', '')
     }
   }
